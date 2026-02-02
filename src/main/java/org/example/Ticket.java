@@ -35,17 +35,28 @@ public abstract class Ticket {
 
     public int estimateResolutionHours() {
         // TODO #1a
-        return -1;
+        return estimateResolutionHours(1,0);
     }
 
     public int estimateResolutionHours(int complexityFactor) {
-        // TODO #1b
-        return -1;
+        if (complexityFactor < 1) {
+            throw new IllegalArgumentException("Complexity factor must be more or equal to 1.");
+        }
+        return estimateResolutionHours(complexityFactor,0);
     }
 
     public int estimateResolutionHours(int complexityFactor, int afterHoursPenalty) {
         // TODO #1c
-        return -1;
+        if (complexityFactor < 1) {
+            throw new IllegalArgumentException("Complexity factor must be more or equal to 1.");
+        }
+        if (afterHoursPenalty < 0) {
+            throw new IllegalArgumentException("After hours penalty must be more or equal to 0.");
+        }
+        int base = (6 - getPriority()) * 2 + getDaysOpen();
+        int result = base * complexityFactor + afterHoursPenalty;
+
+        return Math.max(1, result);
     }
 
     @Override
